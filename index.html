@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kejutan Spesial untuk Pibey ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Fredoka:wght@400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-cream: #fdfbf7;
+            --bg-pink: #ffe5ec;
+            --bg-lavender: #f3e5f5;
+            --text-dark: #4a4a4a;
+            --primary-pink: #ff8fab;
+            --accent-rose: #fb6f92;
+            --night-sky: #1a1a2e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            font-family: 'Comfortaa', cursive;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 1.5s ease;
+            position: relative;
+        }
+
+        #bg-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .sakura {
+            position: absolute;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-5vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+        }
+
+        .container {
+            width: 90%;
+            max-width: 450px;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 25px 20px;
+            box-shadow: 0 10px 30px rgba(255, 143, 171, 0.15);
+            border: 2px solid rgba(255, 229, 236, 0.6);
+            text-align: center;
+            z-index: 10;
+            position: relative;
+            display: none;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .container.active { display: block; opacity: 1; transform: scale(1); }
+        .container.exit { opacity: 0; transform: scale(0.9); }
+
+        h1, h2 { font-family: 'Fredoka', sans-serif; color: var(--accent-rose); margin-bottom: 15px; }
+        p { font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px; }
+
+        .btn {
+            background-color: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 0.95rem;
+            font-family: 'Fredoka', sans-serif;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 143, 171, 0.3);
+            transition: transform 0.2s, background-color 0.2s;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn:active { transform: scale(0.95); }
+
+        /* H2: PIN SCREEN */
+        .pin-display { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
+        .pin-heart { font-size: 1.5rem; color: #ddd; transition: all 0.2s; }
+        .pin-heart.filled { color: var(--accent-rose); transform: scale(1.2); }
+        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 250px; margin: 0 auto; }
+        .key {
+            background: white; border: 2px solid var(--bg-lavender); border-radius: 50%;
+            width: 58px; height: 58px; display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem; font-family: 'Fredoka', sans-serif; cursor: pointer; transition: transform 0.1s;
+        }
+        .key:active { transform: scale(0.85); background-color: var(--bg-lavender); }
+        .shake-animation { animation: shake 0.5s ease-in-out; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        /* H3: SIMULATOR DASHBOARD */
+        .mood-box { background: white; padding: 15px; border-radius: 20px; border: 1px solid var(--bg-pink); margin-bottom: 15px; }
+        .avatar-circle { width: 50px; height: 50px; background: var(--bg-lavender); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.6rem; border: 2px solid var(--primary-pink); }
+        .bar-bg { width: 100%; height: 12px; background: #eee; border-radius: 6px; overflow: hidden; margin-top: 4px; }
+        .bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--primary-pink), var(--accent-rose)); transition: width 0.5s ease; }
+        .story-speech { background: #fcfcfc; border-left: 4px solid var(--primary-pink); padding: 12px; font-size: 0.88rem; line-height: 1.6; border-radius: 0 12px 12px 0; text-align: left; min-height: 60px; }
+        .action-card-wrapper { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .choice-row-btn {
+            background: white; border: 2px solid var(--bg-pink); border-radius: 15px; padding: 12px;
+            font-family: 'Comfortaa', cursive; font-size: 0.85rem; color: var(--text-dark); cursor: pointer;
+            text-align: left; display: flex; align-items: center; gap: 10px;
+        }
+        .magic-hold-btn { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #b5179e, #7209b7); color: white; font-size: 2rem; border: 4px solid white; box-shadow: 0 6px 15px rgba(114, 9, 183, 0.3); cursor: pointer; display: flex; justify-content: center; align-items: center; }
+        .fingerprint-scanner-btn { width: 90px; height: 90px; border-radius: 50%; background: #222; color: #06d6a0; font-size: 2.2rem; border: 4px solid #333; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s; }
+        .fingerprint-scanner-btn.scanning { color: var(--accent-rose); border-color: var(--accent-rose); box-shadow: 0 0 20px rgba(251, 111, 146, 0.5); animation: mini-shake 0.1s infinite; }
+        @keyframes mini-shake { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(2px); } }
+        .hold-instruction-text { font-size: 0.75rem; margin-top: 8px; color: #666; font-weight: bold; }
+
+        /* H4: GAME KERANJANG HATI */
+        #game-canvas-area {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(to bottom, #ffeeea, #fff0f5);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 2px dashed var(--primary-pink);
+            margin: 15px 0;
+        }
+        #basket-player {
+            width: 65px;
+            height: 40px;
+            background: #ffb703;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 0 0 15px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            touch-action: none;
+            border: 2px solid #fb8500;
+        }
+        .falling-heart {
+            position: absolute;
+            font-size: 1.5rem;
+            pointer-events: none;
+        }
+        .game-controls-bar {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 5px;
+        }
+        .control-arrow-btn {
+            background: white; border: 2px solid var(--primary-pink); border-radius: 50%;
+            width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem; color: var(--accent-rose); cursor: pointer;
+        }
+        .control-arrow-btn:active { background: var(--bg-pink); }
+
+        /* H5: LETTER STYLE */
+        .letter-card { background: white; border: 3px dashed var(--primary-pink); border-radius: 20px; padding: 20px 15px; text-align: justify; font-size: 0.88rem; line-height: 1.7; max-height: 280px; overflow-y: auto; margin-bottom: 15px; color: var(--text-dark); }
+
+        /* H6: NIGHT/WISH MODE */
+        .night-mode { background-color: var(--night-sky) !important; }
+        .night-container { background: rgba(26, 26, 46, 0.85) !important; border-color: #4361ee !important; color: #e0e0e0 !important; }
+        .wish-input { width: 100%; height: 70px; border-radius: 12px; border: 2px solid #4361ee; padding: 10px; font-family: 'Comfortaa', cursive; resize: none; background: rgba(255,255,255,0.1); color: white; margin-bottom: 12px; font-size: 0.85rem; }
+
+        /* H7 & H8: INTERACTIVE OPTIONS GRID */
+        .options-list { display: flex; flex-direction: column; gap: 10px; margin: 15px 0; }
+        .opt-btn { background: white; border: 2px dashed var(--primary-pink); border-radius: 15px; padding: 12px; text-align: left; font-family: 'Comfortaa', cursive; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; gap: 5px; color: var(--text-dark); }
+        .opt-btn.opened { background: var(--bg-pink); border-style: solid; }
+        .opt-header { display: flex; align-items: center; gap: 10px; width: 100%; font-weight: bold; }
+        .opt-content { margin-top: 5px; font-size: 0.82rem; color: #555; display: none; line-height: 1.5; padding-left: 8px; border-left: 2px solid var(--accent-rose); text-align: left; width: 100%; }
+        .night-container .opt-btn { background: rgba(255,255,255,0.05); border-color: #4361ee; color: white; }
+        .night-container .opt-btn.opened { background: rgba(67, 97, 238, 0.2); }
+        .night-container .opt-content { color: #ccc; border-left-color: #4361ee; }
+
+        /* H10: CERTIFICATE */
+        .cert-wrapper { background: white; padding: 8px; border-radius: 15px; margin-bottom: 15px; }
+        .certificate-container { border: 5px double #d4af37; padding: 20px 10px; background: #fffdf9; border-radius: 10px; color: var(--text-dark); }
+        .cert-title { font-family: 'Dancing Script', cursive; font-size: 1.6rem; color: #b8860b; }
+        .cert-name { font-family: 'Fredoka', sans-serif; font-size: 2rem; color: var(--accent-rose); margin: 8px 0; }
+        .cert-text { font-size: 0.8rem; color: #555; line-height: 1.5; padding: 0 10px; }
+
+        @media (max-height: 660px) {
+            .container { padding: 15px; }
+            h1 { font-size: 1.3rem; margin-bottom: 8px; }
+            p { font-size: 0.8rem; margin-bottom: 8px; }
+            .key { width: 48px; height: 48px; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="bg-particles"></div>
+
+    <div class="container active" id="page-1">
+        <h1>Halo Pibey ✨</h1>
+        <p>Halo Pibey cantiknya Abay, aku ada sesuatu buat kamu, ikutan dari awal sampe akhir ya cantik.</p>
+        <button class="btn" onclick="navigateToPage(2)">Buka Kejutan <i class="fa-solid fa-heart"></i></button>
+    </div>
+
+    <div class="container" id="page-2">
+        <h1>Gerbang Kode Kado 🔒</h1>
+        <p id="pin-message">Masukkan PIN tanggal jadian kita untuk membuka halaman utama.</p>
+        <div class="pin-display" id="pin-wrapper">
+            <span class="pin-heart"><i class="fa-solid fa-heart"></i></span>
+            <span class="pin-heart"><i class="fa-solid fa-heart"></i></span>
+            <span class="pin-heart"><i class="fa-solid fa-heart"></i></span>
+            <span class="pin-heart"><i class="fa-solid fa-heart"></i></span>
+        </div>
+        <div class="keypad">
+            <div class="key" onclick="pressKey(1)">1</div><div class="key" onclick="pressKey(2)">2</div><div class="key" onclick="pressKey(3)">3</div>
+            <div class="key" onclick="pressKey(4)">4</div><div class="key" onclick="pressKey(5)">5</div><div class="key" onclick="pressKey(6)">6</div>
+            <div class="key" onclick="pressKey(7)">7</div><div class="key" onclick="pressKey(8)">8</div><div class="key" onclick="pressKey(9)">9</div>
+            <div class="key" style="background:transparent; box-shadow:none;"></div><div class="key" onclick="pressKey(0)">0</div>
+            <div class="key" onclick="clearPin()"><i class="fa-solid fa-rotate-left"></i></div>
+        </div>
+    </div>
+
+    <div class="container" id="page-3">
+        <h1 id="sim-title">Misi Hari Abay 🧸</h1>
+        <p id="sim-subtitle">Bantu naikkan Mood Bar Abay sampai 100%.</p>
+
+        <div class="mood-box">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+                <div class="avatar-circle" id="sim-avatar">🥱</div>
+                <div style="flex:1; text-align:left;">
+                    <div style="font-size:0.8rem; font-weight:bold;">Kadar Kebahagiaan Abay</div>
+                    <div class="bar-bg"><div class="bar-fill" id="sim-progress-bar"></div></div>
+                </div>
+                <div style="font-family:'Fredoka',sans-serif; font-size:0.85rem; font-weight:bold; color:var(--accent-rose);" id="sim-pct">0%</div>
+            </div>
+            <div class="story-speech" id="sim-story-text">
+                (Pagi Hari) Abay baru bangun tidur, matanya masih sepet dan badannya lemas banget karena harinya belakangan ini terasa berat...
+            </div>
+        </div>
+
+        <div class="action-card-wrapper" id="sim-deck-phase1">
+            <button class="choice-row-btn" onclick="setupMagicMantra()">
+                <i class="fa-solid fa-wand-magic-sparkles" style="color:var(--primary-pink)"></i>
+                <span>Kirim Mantra Penyemangat Rahasia ✨</span>
+            </button>
+            <button class="choice-row-btn" onclick="wrongChoicePhase1()">
+                <i class="fa-solid fa-pizza-slice" style="color:var(--primary-pink)"></i>
+                <span>Kirim Go-Food Sarapan Virtual</span>
+            </button>
+        </div>
+
+        <div style="display: none; flex-direction: column; align-items: center; margin-top: 15px;" id="sim-magic-hold-zone">
+            <button class="magic-hold-btn" id="magic-hold-trigger">🪄</button>
+            <div class="hold-instruction-text" id="magic-hold-status">TEKAN DAN TAHAN UNTUK MERAPAL MANTRA</div>
+        </div>
+
+        <div class="action-card-wrapper" id="sim-deck-phase2" style="display: none;">
+            <button class="btn" style="background-color: #4cc9f0; margin-top:0;" id="btn-massage-trigger" onclick="handleVirtualMassage()">
+                Berikan Pijat Kepala Virtual 💆‍♂️❤️
+            </button>
+            <div class="hold-instruction-text" id="massage-countdown-label">Ketuk tombol di atas untuk memijat</div>
+        </div>
+
+        <div style="display: none; flex-direction: column; align-items: center; margin-top: 15px;" id="sim-deck-phase3">
+            <button class="fingerprint-scanner-btn" id="scanner-hold-trigger"><i class="fa-solid fa-fingerprint"></i></button>
+            <div class="hold-instruction-text" id="scanner-hold-status">TAHAN JEMPOL UNTUK PINDAI KADAR NGAMBEK</div>
+        </div>
+    </div>
+
+    <div class="container" id="page-4">
+        <h1>Tangkap Hati Abay 🧺❤️</h1>
+        <p id="basket-status">Geser keranjang ke kiri/kanan untuk menangkap hati. Target skor: 10</p>
+        <div style="font-size:1.1rem; font-weight:bold; color:var(--accent-rose);">Skor Kamu: <span id="basket-score-val">0</span></div>
+        
+        <div id="game-canvas-area">
+            <div id="basket-player">🧺</div>
+        </div>
+
+        <div class="game-controls-bar">
+            <button class="control-arrow-btn" onclick="moveBasketLeft()"><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="control-arrow-btn" onclick="moveBasketRight()"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+        
+        <button class="btn" id="btn-to-page5" style="display:none; background-color:#e76f51;" onclick="navigateToPage(5)">Buka Surat dari Abay 📜</button>
+    </div>
+
+    <div class="container" id="page-5">
+        <h1>Surat dari Abay 📜</h1>
+        <div class="letter-card">
+            Halo sayang...<br><br>
+            Makasih ya udah mau mainin semua game random yang aku buat di web ini sampai akhir, hehe.<br><br>
+            Aku cuma mau bilang kalau aku bersyukur banget bisa punya kamu. Bareng kamu tuh rasanya seru terus, gak pernah bosen. Makasih udah selalu sabar menghadapi semua tingkah aku, udah selalu ada pas aku lagi capek, dan selalu bisa bikin aku senyum lagi.<br><br>
+            Honestly, aku emang gak jago ngerangkai kata-kata puitis yang panjang banget, tapi yang jelas sayang aku ke kamu tuh beneran tulus banget, no cap.<br><br>
+            I love you more than words can say, Pibey. Tetap sama Abay terus yaa! 🤍✨
+        </div>
+        <button class="btn" style="background-color:#fb6f92;" onclick="navigateToPage(6)">Tulis Harapan di Sini ✨</button>
+    </div>
+
+    <div class="container" id="page-6">
+        <h1 style="color:#a2d2ff;">Ruang Harapan 🌌</h1>
+        <p>Tuliskan tiga harapan atau keinginan masa depan kita bersama di bawah ini:</p>
+        <div id="wish-form-wrapper">
+            <textarea class="wish-input" id="wish-text-1" placeholder="Harapan 1: Misalnya tentang hubungan kita..."></textarea>
+            <textarea class="wish-input" id="wish-text-2" placeholder="Harapan 2: Misalnya agenda liburan/jalan bareng..."></textarea>
+            <textarea class="wish-input" id="wish-text-3" placeholder="Harapan 3: Keinginan random lainnya..."></textarea>
+            <button class="btn" style="background-color:#4361ee;" onclick="submitWish()">Terbangkan Harapan 🌌</button>
+        </div>
+        <div id="wish-result-wrapper" style="display: none;">
+            <h2 style="color: #ffafcc; font-size: 1.1rem; margin-bottom: 15px;">Semua harapan kamu sudah disimpan dengan aman oleh semesta. 🌠</h2>
+            <button class="btn" style="background-color: #7209b7;" onclick="navigateToPage(7)">Lihat Alasan Abay 🤔❤️</button>
+        </div>
+    </div>
+
+    <div class="container" id="page-7">
+        <h1>Alasan Aku Sayang Kamu ❤️</h1>
+        <p>Buka kelima opsi di bawah ini satu per satu:</p>
+        <div class="options-list">
+            <div class="opt-btn" id="h7-b1" onclick="openReason(1)"><div class="opt-header"><i class="fa-solid fa-heart"></i> Opsi 1</div><div class="opt-content" id="h7-c1">Because you pay attention and care about the little things in my life.</div></div>
+            <div class="opt-btn" id="h7-b2" onclick="openReason(2)"><div class="opt-header"><i class="fa-solid fa-heart"></i> Opsi 2</div><div class="opt-content" id="h7-c2">Your patience when listening to all my stories and daily complaints.</div></div>
+            <div class="opt-btn" id="h7-b3" onclick="openReason(3)"><div class="opt-header"><i class="fa-solid fa-heart"></i> Opsi 3</div><div class="opt-content" id="h7-c3">Karena kamu bisa menerima kekurangan aku apa adanya.</div></div>
+            <div class="opt-btn" id="h7-b4" onclick="openReason(4)"><div class="opt-header"><i class="fa-solid fa-heart"></i> Opsi 4</div><div class="opt-content" id="h7-c4">Cara bercanda kita yang cocok, jadi ngobrolin hal biasa pun rasanya selalu seru.</div></div>
+            <div class="opt-btn" id="h7-b5" onclick="openReason(5)"><div class="opt-header"><i class="fa-solid fa-heart"></i> Opsi 5</div><div class="opt-content" id="h7-c5">Kamu selalu menghargai setiap usaha yang aku lakukan untuk hubungan ini.</div></div>
+        </div>
+        <div id="h7-footer-text" style="font-size:0.88rem; font-weight:bold; min-height:30px; margin-top:10px; color:var(--accent-rose); line-height:1.5;"></div>
+        <button class="btn" id="btn-to-page8" style="display:none; background-color:#fb6f92;" onclick="navigateToPage(8)">Lihat Janji Abay 🤝</button>
+    </div>
+
+    <div class="container" id="page-8">
+        <h1>Komitmen & Janji Abay 🤝</h1>
+        <p>Buka seluruh komitmen di bawah ini:</p>
+        <div class="options-list">
+            <div class="opt-btn" id="h8-b1" onclick="openPromise(1)"><div class="opt-header"><i class="fa-solid fa-handshake"></i> Komitmen 1</div><div class="opt-content" id="h8-c1">Aku janji bakal selalu luangin waktu untuk dengerin setiap cerita, sedih, maupun senang kamu.</div></div>
+            <div class="opt-btn" id="h8-b2" onclick="openPromise(2)"><div class="opt-header"><i class="fa-solid fa-handshake"></i> Komitmen 2</div><div class="opt-content" id="h8-c2">Aku janji akan selalu menjaga kepercayaan yang udah kamu kasih dan memprioritaskan hubungan kita.</div></div>
+            <div class="opt-btn" id="h8-b3" onclick="openPromise(3)"><div class="opt-header"><i class="fa-solid fa-handshake"></i> Komitmen 3</div><div class="opt-content" id="h8-c3">Aku janji untuk selalu berusaha sabar, menurunkan ego, dan menyelesaikan setiap masalah lewat komunikasi yang baik.</div></div>
+            <div class="opt-btn" id="h8-b4" onclick="openPromise(4)"><div class="opt-header"><i class="fa-solid fa-handshake"></i> Komitmen 4</div><div class="opt-content" id="h8-c4">Aku janji akan terus belajar jadi versi yang lebih baik lagi demi bisa mendampingi kamu ke depannya.</div></div>
+        </div>
+        <button class="btn" id="btn-to-page9" style="display:none; background-color:#2ec4b6;" onclick="navigateToPage(9)">Kirim Pelukan & Cium Virtual 🤗💋</button>
+    </div>
+
+    <div class="container" id="page-9">
+        <h1>Ruang Kasih Sayang 🤗💋</h1>
+        <p>Kirim interaksi virtual kamu ke Abay di bawah ini:</p>
+        <div style="display:flex; justify-content:center; gap:15px; margin:20px 0;">
+            <button class="btn" style="background-color:#ff8fab; padding:15px 20px; margin-top:0;" onclick="triggerInteract('hug')">Kirim Pelukan 🤗</button>
+            <button class="btn" style="background-color:#ff4d6d; padding:15px 20px; margin-top:0;" onclick="triggerInteract('kiss')">Kirim Cium 💋</button>
+        </div>
+        <div id="interact-status" style="font-size:0.85rem; font-weight:bold; color:var(--accent-rose); min-height:50px; line-height:1.5;">
+            Belum ada interaksi yang dikirimkan.
+        </div>
+        <button class="btn" id="btn-to-page10" style="display:none; background-color:#d4af37;" onclick="navigateToPage(10)">Ambil Penghargaan Kamu 🏆</button>
+    </div>
+
+    <div class="container" id="page-10">
+        <h1>Penghargaan Tertinggi 🏆</h1>
+        <div class="cert-wrapper" id="capture-zone">
+            <div class="certificate-container">
+                <div class="cert-title">Sertifikat Penghargaan Terbaik</div>
+                <div style="font-size:0.75rem; color:#888; margin-top:5px;">Diberikan Kepada Pasangan Terhebat</div>
+                <hr style="border:0; border-top:1px solid #d4af37; margin:10px 40px;">
+                <div class="cert-name">PIBEY</div>
+                <hr style="border:0; border-top:1px solid #d4af37; margin:10px 40px;">
+                <div class="cert-text">
+                    Sebagai predikat kekasih terbaik, paling penyabar, paling menggemaskan, dan pemilik hati Abay seutuhnya di seluruh jagat raya.
+                </div>
+                <div style="margin-top:25px; font-family:'Dancing Script',cursive; font-size:1.2rem; color:#b8860b;">Let's make memories together, Abay 🧸</div>
+            </div>
+        </div>
+        <button class="btn" style="background-color: #2ec4b6;" onclick="downloadCertificate()">Unduh Sertifikat ke Galeri 📸</button>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        let inputPin = "";
+        const targetPin = "4326";
+        let currentPts = 0;
+        let massageClicks = 0;
+        let holdTimerEngine = null;
+        let holdDurationCounter = 0;
+        let openedReasons = new Set();
+        let openedPromises = new Set();
+        let totalHugs = 0;
+        let totalKisses = 0;
+
+        // Catching Hearts Game Setup
+        let gameScore = 0;
+        let basketPos = 50; 
+        let heartSpawnInterval = null;
+        let heartFallInterval = null;
+        let gameActive = false;
+
+        // Particle Background Generator
+        const particleBox = document.getElementById('bg-particles');
+        function makeSakura() {
+            const p = document.createElement('div');
+            p.innerText = '🌸';
+            p.className = 'sakura';
+            p.style.top = '-5vh';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.fontSize = (Math.random() * 0.4 + 0.6) + 'rem';
+            p.style.animation = `fall ${Math.random() * 3 + 4}s linear forwards`;
+            p.style.opacity = Math.random() * 0.4 + 0.6;
+            particleBox.appendChild(p);
+            setTimeout(() => p.remove(), 6000);
+        }
+        setInterval(makeSakura, 600);
+
+        function navigateToPage(num) {
+            const currentEl = document.getElementById(`page-${currentPage}`);
+            const nextEl = document.getElementById(`page-${num}`);
+            currentEl.classList.add('exit');
+            setTimeout(() => {
+                currentEl.classList.remove('active', 'exit');
+                currentEl.style.display = 'none';
+                
+                if(num === 6) {
+                    document.body.classList.add('night-mode');
+                    nextEl.classList.add('night-container');
+                } else {
+                    document.body.classList.remove('night-mode');
+                    nextEl.classList.remove('night-container');
+                }
+                
+                nextEl.style.display = 'block';
+                nextEl.offsetHeight; 
+                nextEl.classList.add('active');
+                currentPage = num;
+
+                // Stop game if page switches
+                if (num !== 4) stopHeartGame();
+                if (num === 4) startHeartGame();
+            }, 500);
+        }
+
+        // H2: Pin Core Pad
+        function updatePinHearts() {
+            const nodes = document.querySelectorAll('#pin-wrapper .pin-heart');
+            nodes.forEach((node, i) => {
+                if(i < inputPin.length) node.classList.add('filled');
+                else node.classList.remove('filled');
+            });
+        }
+        function pressKey(val) {
+            if(inputPin.length >= 4) return;
+            inputPin += val;
+            updatePinHearts();
+            if(inputPin.length === 4) {
+                setTimeout(() => {
+                    const wrap = document.getElementById('pin-wrapper');
+                    if(inputPin === targetPin) {
+                        confetti({ particleCount: 20 });
+                        navigateToPage(3);
+                    } else {
+                        wrap.classList.add('shake-animation');
+                        document.getElementById('pin-message').style.color = "var(--accent-rose)";
+                        document.getElementById('pin-message').innerText = "Kodenya keliru, coba diingat kembali tanggal jadian kita ya... 🧸";
+                        setTimeout(() => { wrap.classList.remove('shake-animation'); inputPin = ""; updatePinHearts(); }, 500);
+                    }
+                }, 300);
+            }
+        }
+        function clearPin() { inputPin = ""; updatePinHearts(); }
+
+        // H3: Simulator Engine
+        function updateMoodUI(val, icon, txt) {
+            currentPts = val;
+            document.getElementById('sim-progress-bar').style.width = `${val}%`;
+            document.getElementById('sim-pct').innerText = `${val}%`;
+            if(icon) document.getElementById('sim-avatar').innerText = icon;
+            if(txt) document.getElementById('sim-story-text').innerText = txt;
+        }
+        function wrongChoicePhase1() {
+            document.getElementById('sim-story-text').innerText = "Abay masih kenyang dan agak mual kalau pagi hari. Makanannya disimpan dulu ya, coba cari opsi lain!";
+        }
+        function setupMagicMantra() {
+            document.getElementById('sim-deck-phase1').style.display = 'none';
+            document.getElementById('sim-magic-hold-zone').style.display = 'flex';
+            updateMoodUI(0, '🪄', "Tekan dan tahan tombol tongkat sihir di bawah selama 2 detik penuh tanpa dilepas untuk merapal energinya.");
+            
+            const btn = document.getElementById('magic-hold-trigger');
+            btn.addEventListener('mousedown', startMantra);
+            btn.addEventListener('mouseup', stopMantra);
+            btn.addEventListener('mouseleave', stopMantra);
+            btn.addEventListener('touchstart', e => { e.preventDefault(); startMantra(); });
+            btn.addEventListener('touchend', stopMantra);
+        }
+        function startMantra() {
+            const lbl = document.getElementById('magic-hold-status');
+            holdDurationCounter = 0;
+            holdTimerEngine = setInterval(() => {
+                holdDurationCounter += 0.2;
+                lbl.innerText = `MERAPAL MANTRA... (${Math.min(100, Math.round((holdDurationCounter/2)*100))}%)`;
+                if(holdDurationCounter >= 2) {
+                    clearInterval(holdTimerEngine);
+                    confetti({ particleCount: 30 });
+                    updateMoodUI(35, '🥰', "(Siang Hari) Mantra kamu berhasil! Rasa lemas Abay hilang. Tapi sekarang Abay malah pusing karena tumpukan tugas urusan kerjaan...");
+                    document.getElementById('sim-magic-hold-zone').style.display = 'none';
+                    document.getElementById('sim-deck-phase2').style.display = 'block';
+                    document.getElementById('sim-title').innerText = "Misi Siang Hari ☀️";
+                }
+            }, 200);
+        }
+        function stopMantra() {
+            clearInterval(holdTimerEngine);
+            if(holdDurationCounter < 2) document.getElementById('magic-hold-status').innerText = "TAHAN TERUS JANGAN DILEPAS!";
+        }
+
+        function handleVirtualMassage() {
+            massageClicks++;
+            if(massageClicks >= 10) {
+                confetti({ particleCount: 30 });
+                updateMoodUI(70, '🤩', "(Malam Hari) Capek Abay hilang total! Sekarang Abay siap nemenin kamu bersantai. Tapi sebelum itu, sistem mau verifikasi status emosi kamu dulu lewat sensor khusus...");
+                document.getElementById('sim-deck-phase2').style.display = 'none';
+                document.getElementById('sim-deck-phase3').style.display = 'flex';
+                document.getElementById('sim-title').innerText = "Misi Malam Hari 🌙";
+                setupScanner();
+            } else {
+                document.getElementById('massage-countdown-label').innerText = `Mengirimkan energi pijat... (${massageClicks}/10)`;
+            }
+        }
+
+        function setupScanner() {
+            const trigger = document.getElementById('scanner-hold-trigger');
+            trigger.addEventListener('mousedown', startScanning);
+            trigger.addEventListener('mouseup', stopScanning);
+            trigger.addEventListener('mouseleave', stopScanning);
+            trigger.addEventListener('touchstart', e => { e.preventDefault(); startScanning(); });
+            trigger.addEventListener('touchend', stopScanning);
+        }
+        function startScanning() {
+            document.getElementById('scanner-hold-trigger').classList.add('scanning');
+            holdDurationCounter = 0;
+            holdTimerEngine = setInterval(() => {
+                holdDurationCounter += 0.25;
+                document.getElementById('scanner-hold-status').innerText = `MEMINDAI GEJALA NGAMBEK... (${Math.min(100, Math.round((holdDurationCounter/4)*100))}%)`;
+                if(holdDurationCounter >= 4) {
+                    clearInterval(holdTimerEngine);
+                    document.getElementById('scanner-hold-trigger').classList.remove('scanning');
+                    confetti({ particleCount: 40 });
+                    updateMoodUI(100, '👑', "HASIL SENSOR: Kadar Ngambek Pibey terdeteksi 0%, dan Kadar Kangen 100%! Mood Abay otomatis penuh sempurna! ❤️");
+                    document.getElementById('sim-deck-phase3').style.display = 'none';
+                    
+                    const nextBtn = document.createElement('button');
+                    nextBtn.className = "btn";
+                    nextBtn.style.backgroundColor = "var(--accent-rose)";
+                    nextBtn.innerHTML = "Lanjut Tangkap Hati 🧺";
+                    nextBtn.onclick = () => navigateToPage(4);
+                    document.getElementById('page-3').appendChild(nextBtn);
+                }
+            }, 250);
+        }
+        function stopScanning() {
+            clearInterval(holdTimerEngine);
+            document.getElementById('scanner-hold-trigger').classList.remove('scanning');
+            if(holdDurationCounter < 4) document.getElementById('scanner-hold-status').innerText = "PINDAI GAGAL! JANGAN DILEPAS DULU!";
+        }
+
+        // H4: Catching Hearts Mechanics
+        function startHeartGame() {
+            gameActive = true;
+            gameScore = 0;
+            basketPos = 50;
+            document.getElementById('basket-score-val').innerText = gameScore;
+            document.getElementById('basket-player').style.left = '50%';
+            
+            // Spawn systems
+            heartSpawnInterval = setInterval(spawnHeartUnit, 900);
+            heartFallInterval = setInterval(processHeartsFall, 40);
+        }
+
+        function stopHeartGame() {
+            gameActive = false;
+            clearInterval(heartSpawnInterval);
+            clearInterval(heartFallInterval);
+            const list = document.querySelectorAll('.falling-heart');
+            list.forEach(el => el.remove());
+        }
+
+        function moveBasketLeft() {
+            if (!gameActive) return;
+            basketPos = Math.max(10, basketPos - 12);
+            document.getElementById('basket-player').style.left = basketPos + '%';
+        }
+
+        function moveBasketRight() {
+            if (!gameActive) return;
+            basketPos = Math.min(90, basketPos + 12);
+            document.getElementById('basket-player').style.left = basketPos + '%';
+        }
+
+        function spawnHeartUnit() {
+            if (!gameActive) return;
+            const area = document.getElementById('game-canvas-area');
+            const h = document.createElement('div');
+            h.className = 'falling-heart';
+            h.innerText = Math.random() > 0.4 ? '❤️' : '💖';
+            h.style.top = '0px';
+            h.style.left = Math.floor(Math.random() * 85 + 5) + '%';
+            area.appendChild(h);
+        }
+
+        function processHeartsFall() {
+            if (!gameActive) return;
+            const hearts = document.querySelectorAll('.falling-heart');
+            const basket = document.getElementById('basket-player');
+            const bRect = basket.getBoundingClientRect();
+            const area = document.getElementById('game-canvas-area');
+            const aRect = area.getBoundingClientRect();
+
+            hearts.forEach(h => {
+                let curTop = parseFloat(h.style.top) || 0;
+                curTop += 4; // falling speed
+                h.style.top = curTop + 'px';
+
+                // Check out of bounds
+                if (curTop > 270) {
+                    h.remove();
+                    return;
+                }
+
+                // Precision Collision Box Testing
+                const hRect = h.getBoundingClientRect();
+                if (
+                    hRect.bottom >= bRect.top &&
+                    hRect.top <= bRect.bottom &&
+                    hRect.right >= bRect.left &&
+                    hRect.left <= bRect.right
+                ) {
+                    h.remove();
+                    gameScore++;
+                    document.getElementById('basket-score-val').innerText = gameScore;
+                    
+                    if (gameScore >= 10) {
+                        stopHeartGame();
+                        confetti({ particleCount: 30 });
+                        document.getElementById('basket-status').innerText = "Hebat! Semua hati Abay terkumpul sempurna!";
+                        document.getElementById('btn-to-page5').style.display = 'inline-flex';
+                    }
+                }
+            });
+        }
+
+        // H6: Make a Wish Engine
+        function submitWish() {
+            const w1 = document.getElementById('wish-text-1').value.trim();
+            const w2 = document.getElementById('wish-text-2').value.trim();
+            const w3 = document.getElementById('wish-text-3').value.trim();
+            
+            if(!w1 || !w2 || !w3) { 
+                alert("Isi ketiga kotak harapannya dulu ya cantik... ❤️"); 
+                return; 
+            }
+            
+            document.getElementById('wish-form-wrapper').style.display = 'none';
+            
+            for(let i=0; i<12; i++) {
+                setTimeout(() => {
+                    const star = document.createElement('div');
+                    star.innerText = '⭐️';
+                    star.style.position = 'absolute';
+                    star.style.bottom = '10vh';
+                    star.style.left = Math.random() * 100 + 'vw';
+                    star.style.transition = 'all 2s ease';
+                    star.style.zIndex = '99';
+                    document.body.appendChild(star);
+                    setTimeout(() => { star.style.transform = 'translateY(-110vh)'; star.style.opacity = '0'; }, 50);
+                    setTimeout(() => star.remove(), 2100);
+                }, i * 150);
+            }
+            setTimeout(() => document.getElementById('wish-result-wrapper').style.display = 'block', 1200);
+        }
+
+        // H7: 5 Reasons Engine
+        function openReason(num) {
+            const btn = document.getElementById(`h7-b${num}`);
+            const content = document.getElementById(`h7-c${num}`);
+            if(!openedReasons.has(num)) {
+                openedReasons.add(num);
+                btn.classList.add('opened');
+                content.style.display = 'block';
+                confetti({ particleCount: 2, spread: 20 });
+                
+                setTimeout(() => {
+                    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+
+                if(openedReasons.size === 5) {
+                    document.getElementById('h7-footer-text').innerText = "Intinya, aku selalu sayang sama kamu, dulu, sekarang, dan seterusnya... 🤍";
+                    document.getElementById('btn-to-page8').style.display = 'inline-flex';
+                    setTimeout(() => {
+                        document.getElementById('btn-to-page8').scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
+                }
+            }
+        }
+
+        // H8: Promises Engine
+        function openPromise(num) {
+            const btn = document.getElementById(`h8-b${num}`);
+            const content = document.getElementById(`h8-c${num}`);
+            if(!openedPromises.has(num)) {
+                openedPromises.add(num);
+                btn.classList.add('opened');
+                content.style.display = 'block';
+                confetti({ particleCount: 2, spread: 20 });
+                
+                setTimeout(() => {
+                    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+
+                if(openedPromises.size === 4) {
+                    document.getElementById('btn-to-page9').style.display = 'inline-flex';
+                    setTimeout(() => {
+                        document.getElementById('btn-to-page9').scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
+                }
+            }
+        }
+
+        // H9: Interaction Room Engine
+        function triggerInteract(type) {
+            const lbl = document.getElementById('interact-status');
+            confetti({ particleCount: 4, spread: 30, origin: { y: 0.85 } });
+            if(type === 'hug') {
+                totalHugs++;
+            } else {
+                totalKisses++;
+            }
+            lbl.innerHTML = `Kamu sudah mengirimkan <b>${totalHugs} Pelukan</b> dan <b>${totalKisses} Ciuman</b> virtual ke Abay! <br><span style="color:#ff4d6d">Abay senang banget menerimanya! 🥰</span>`;
+            if(totalHugs + totalKisses >= 5) {
+                document.getElementById('btn-to-page10').style.display = 'inline-flex';
+            }
+        }
+
+        // H10: Snapshot Canvas Certificate Engine
+        function downloadCertificate() {
+            const zone = document.getElementById('capture-zone');
+            html2canvas(zone, { scale: 3, backgroundColor: null }).then(canvas => {
+                const url = canvas.toDataURL('image/png');
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'Sertifikat_Pibey_Terhebat.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }).catch(() => {
+                alert("Sistem galeri tidak mendukung unduh otomatis, silakan discreenshot piagamnya ya sayang! ❤️");
+            });
+        }
+    </script>
+</body>
+</html>
